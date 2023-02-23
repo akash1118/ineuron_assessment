@@ -1,0 +1,9 @@
+{
+    "dev": {
+      "username": "mongo",
+      "password": "mongo",
+      "database": "myapp",
+      "host"    : "",
+      "port"    :"27017"
+    }
+  }
