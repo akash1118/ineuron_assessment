@@ -1,9 +1,23 @@
 const envConf = require('dotenv').config({ debug: process.env.DEBUG });
+const swaggerTools = require('swagger-tools');
+
+let swaggerDoc = require('./swagger.json');
+
+const options = {
+  controllers: './src/controllers'
+  }
 
 if (envConf.error) {
   throw envConf.error
 }
- 
+
+
+swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+  app.use(middleware.swaggerMetadata())
+  app.use(middleware.swaggerValidator())
+  app.use(middleware.swaggerRouter(options))
+  app.use(middleware.swaggerUi())
+})
 
 const express = require('express');
 const database = require('./www/db/dbConfig');

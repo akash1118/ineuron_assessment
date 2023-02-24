@@ -1,0 +1,237 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Crud Application Doc",
+        "description": "iNeuron Assessment Swagger Documentation",
+        "version": "1.0"
+    },
+    "host": "localhost:3008",
+    "basePath": "/api/v1",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+        "/listUsers": {
+            "get": {
+                "x-swagger-router-controller": "getuser",
+                "operationId": "listUsers",
+                "responses": {
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "200": {
+                        "description": "Successful request.",
+                        "schema": {
+                            "$ref": "#/definitions/getAllUsers"
+                        }
+                    }
+                }
+            }
+        },
+        "/adduser": {
+            "post": {
+                "x-swagger-router-controller": "adduser",
+                "operationId": "addUser",
+                "parameters": [
+                    {
+                        "name": "adduser",
+                        "in": "body",
+                        "description": "add users",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/adduser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error400"
+                        }
+                    },
+                    "201": {
+                        "description": "Contact Created"
+                    }
+                }
+            }
+        },
+        "/edituser/{id}": {
+            "put": {
+                "x-swagger-router-controller": "edit",
+                "operationId": "edit",
+                "parameters": [
+                    {
+                        "name": "editUser",
+                        "in": "body",
+                        "description": "Create Users",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/adduser"
+                        }
+                    },{
+                        "name": "id",
+                        "in": "path",
+                        "description": "Create Users",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error400"
+                        }
+                    },
+                    "201": {
+                        "description": "Contact Created"
+                    }
+                }
+            }
+        },
+        "/deleteusersbyid/{id}": {
+            "delete": {
+                "x-swagger-router-controller": "deleteuser",
+                "operationId": "deleteuser",
+                "summary": "Deletes a user by ID",
+                "description": "Deletes a user with the specified ID from the database",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of user to return",
+                        "required": true,
+                        "type": "string"
+                      }
+                  ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "required": [
+                "error",
+                "message",
+                "data"
+            ],
+            "properties": {
+                "error": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object"
+                }
+            }
+        },
+        "Error400": {
+            "required": [
+                "message",
+                "description"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "getAllUsers": {
+            "properties": {
+                "data": {
+                    "type": "object",
+                    
+                        "properties": {
+                            "_id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "mobile": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "state": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "string"
+                            },
+                            "updatedAt":{
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+        "adduser": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "mobile",
+                "email",
+                "city",
+                "state"
+            ],
+            "example": {
+                "name": "akash123456",
+                "mobile": "789013786",
+                "email": "akash@tsest.com",
+                "city": "Kolkata",
+                "state": "WB"
+            }
+        }
+    }}
+
+

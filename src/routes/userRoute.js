@@ -1,4 +1,4 @@
-const operatorController = require('../controllers/operatorController')
+const operatorController = require('../controllers/userController')
 const validate = require('../middlewares/validations')
 const appConfig = require('../../config/appConfig')
 

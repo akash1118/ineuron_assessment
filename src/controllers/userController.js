@@ -2,7 +2,7 @@
 require('dotenv').config()
 const response = require('../libs/responseLib')
 
-const user = require('./../models/userSchema')
+const user = require('../models/userSchema')
 const mongoose = require('mongoose');
 
 
@@ -24,7 +24,7 @@ let addUser = async (req, res) => {
                 group_name: req.body.name
             }
             let apiResponse = response.generate(false, 'User Added Successfully', data)
-            res.status(200).send(apiResponse)
+            res.status(201).send(apiResponse)
         } else {
             let apiResponse = response.generate(false, 'User Already Exists', null)
             res.status(200).send(apiResponse)
@@ -46,7 +46,7 @@ let editUSer = async (req, res) => {
             // await user.userDetails.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { "$set": { "name": `${req.body.name}`, "mobile": `${req.body.mobile}`, "email": `${req.body.email}`, "city": `${req.body.city}`,"state": `${req.body.state}` } })
             await user.userDetails.findByIdAndUpdate(req.params.id, req.body, { useFindAndModify: false })
             let apiResponse = response.generate(false, 'Details Updated Successfully', req.body)
-            res.status(200).send(apiResponse)
+            res.status(201).send(apiResponse)
 
         } else {
 
@@ -94,11 +94,14 @@ let deleteUser = async (req, res) => {
             let deleteUsers = await user.userDetails.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) })
             deleteUsers.id = req.params.id
             apiResponse = response.generate(false, 'User Deleted Successfullly', deleteUsers)
+            res.status(204).send(apiResponse)
+            console.log(res)
         } else {
-            apiResponse = response.generate(false, 'User does not exist', null)
-
+            apiResponse = response.generate(false, 'User not found', null)
+            res.status(404).send(apiResponse)
+            console.log(res)
         }
-        res.status(200).send(apiResponse)
+       
     } catch (err) {
         console.log(err)
         let apiResponse = response.generate(true, `Error Occured : ${err.message}`, null);
