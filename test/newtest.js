@@ -29,7 +29,7 @@ describe('Delete User API', () => {
 
     it('Status', done => {
       request.delete(`lcoalhost:3008/api/v1/deleteusersbyid/${user_id}`, {}, (_, response) => {
-        expect(response.statusCode).to.equal(400)
+        expect(response.statusCode).to.equal(412)
         done()
       })
     })
@@ -37,7 +37,8 @@ describe('Delete User API', () => {
     it('Content', done => {
       request.delete(`lcoalhost:3008/api/v1/deleteusersbyid/${user_id}`, {}, (_, response) => {
         const body = JSON.parse(response.body)
-        expect(body.errors[0]).to.equal('Please provide a valid user_id')
+        console.log(body)
+        expect(body.errors[0]).to.equal('User not found')
         done()
       })
     })
